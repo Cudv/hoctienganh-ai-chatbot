@@ -3,6 +3,10 @@ import SignupForm from '@/components/signup-form'
 import { Session } from '@/lib/types'
 import { redirect } from 'next/navigation'
 
+export const metadata = {
+  title: 'Sign up'
+}
+
 export default async function SignupPage() {
   const session = (await auth()) as Session
 
