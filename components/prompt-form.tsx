@@ -9,7 +9,7 @@ import { useActions, useUIState } from 'ai/rsc'
 import { UserMessage } from './stocks/message'
 import { type AI } from '@/lib/chat/actions'
 import { Button } from '@/components/ui/button'
-import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
+import { IconArrowElbow, IconPlus, IconMicrophone } from '@/components/ui/icons'
 import {
   Tooltip,
   TooltipContent,
@@ -80,7 +80,7 @@ export function PromptForm({
       <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
+            {/* <Button
               variant="outline"
               size="icon"
               className="absolute left-0 top-4 size-8 rounded-full bg-background p-0 sm:left-4"
@@ -90,9 +90,17 @@ export function PromptForm({
             >
               <IconPlus />
               <span className="sr-only">New Chat</span>
+            </Button> */}
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute left-0 top-4 size-8 rounded-full bg-background p-0 sm:left-4"
+            >
+              <IconMicrophone />
+              <span className="sr-only">New Speech</span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>New Chat</TooltipContent>
+          <TooltipContent>New Speech</TooltipContent>
         </Tooltip>
         <Textarea
           ref={inputRef}
