@@ -56,7 +56,7 @@ export function Header() {
           <UserOrLogin />
         </React.Suspense>
       </div>
-      <div className="hidden flex items-center justify-end space-x-2">
+      {/* <div className="flex items-center justify-end space-x-2">
         <a
           target="_blank"
           href="https://github.com/Cudv/hoctienganh-ai-chatbot"
@@ -66,7 +66,7 @@ export function Header() {
           <IconGitHub />
           <span className="hidden ml-2 md:flex">GitHub</span>
         </a>
-      </div>
+      </div> */}
     </header>
   )
 }
