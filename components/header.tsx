@@ -59,7 +59,7 @@ export function Header() {
       <div className="hidden flex items-center justify-end space-x-2">
         <a
           target="_blank"
-          href="https://github.com/vaithschmitz/segment-ai-copilot"
+          href="https://github.com/Cudv/hoctienganh-ai-chatbot"
           rel="noopener noreferrer"
           className={cn(buttonVariants({ variant: 'outline' }))}
         >
