@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 

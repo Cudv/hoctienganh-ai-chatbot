@@ -1,4 +1,5 @@
 'use client'
+import 'regenerator-runtime/runtime'
 
 import * as React from 'react'
 import Textarea from 'react-textarea-autosize'
@@ -9,7 +10,7 @@ import { useActions, useUIState } from 'ai/rsc'
 import { UserMessage } from './stocks/message'
 import { type AI } from '@/lib/chat/actions'
 import { Button } from '@/components/ui/button'
-import { IconArrowElbow, IconPlus, IconMicrophone } from '@/components/ui/icons'
+import { IconArrowElbow, IconPlus, IconMicrophone, IconMicrophoneSlash } from '@/components/ui/icons'
 import {
   Tooltip,
   TooltipContent,
@@ -18,6 +19,8 @@ import {
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import { toast } from 'sonner'
 
 export function PromptForm({
   input,
@@ -32,11 +35,35 @@ export function PromptForm({
   const { submitUserMessage } = useActions()
   const [_, setMessages] = useUIState<typeof AI>()
 
+  const { transcript, resetTranscript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition()
+  // if (!browserSupportsSpeechRecognition) {
+    // return <span>Browser doesn&apos;t support speech recognition.</span>
+  // }
+  const microphoneOn = () => {
+    SpeechRecognition.startListening({ continuous: true });
+    // toast.success("Microphone On", { duration: 1500 })
+  };
+
+  const microphoneOff = () => {
+    SpeechRecognition.stopListening();
+    // toast.error("Microphone Off", { duration: 1500 })
+  };
+
   React.useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }, [])
+  React.useEffect(() => {
+    if (transcript) {
+      setInput(transcript)
+    }
+  }, [transcript])
+  React.useEffect(() => {
+    if (input.trim().length == 0) {
+      resetTranscript()
+    }
+  }, [input])
 
   return (
     <form
@@ -62,6 +89,7 @@ export function PromptForm({
           }
         })
 
+        resetTranscript()
         
         // Optimistically add user message UI
         setMessages(currentMessages => [
@@ -95,8 +123,9 @@ export function PromptForm({
               variant="outline"
               size="icon"
               className="absolute left-0 top-4 size-8 rounded-full bg-background p-0 sm:left-4"
+              onClick={!listening ? microphoneOn : microphoneOff}
             >
-              <IconMicrophone />
+              {!listening ? <IconMicrophone /> : <IconMicrophoneSlash />}
               <span className="sr-only">New Speech</span>
             </Button>
           </TooltipTrigger>
@@ -117,6 +146,7 @@ export function PromptForm({
           value={input}
           onChange={e => setInput(e.target.value)}
         />
+        {/* <input value={transcript} onChange={() => {inputRef.current.value = transcript}} name="transcript" id="transcript" /> */}
         <div className="absolute right-0 top-4 sm:right-4">
           <Tooltip>
             <TooltipTrigger asChild>
