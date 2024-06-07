@@ -56,7 +56,7 @@ export function Header() {
           <UserOrLogin />
         </React.Suspense>
       </div>
-      <div className="flex items-center justify-end space-x-2">
+      <div className="hidden flex items-center justify-end space-x-2">
         <a
           target="_blank"
           href="https://github.com/vaithschmitz/segment-ai-copilot"
